@@ -15,6 +15,8 @@ public class UserDto {
     private Long id;
     private String username;
     private String email;
+    private String firstName;
+    private String lastName;
     private Set<String> roles;
 
     public static UserDto from(User user) {
@@ -22,6 +24,8 @@ public class UserDto {
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .roles(
                         user.getRoles().stream()
                                 .map(r -> r.getName().name())

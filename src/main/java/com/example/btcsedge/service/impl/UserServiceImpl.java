@@ -1,6 +1,7 @@
 package com.example.btcsedge.service.impl;
 
 import com.example.btcsedge.domain.enums.RoleName;
+import com.example.btcsedge.domain.enums.UserRole;
 import com.example.btcsedge.domain.model.Role;
 import com.example.btcsedge.domain.model.User;
 import com.example.btcsedge.dto.CreateUserDto;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -92,5 +94,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public long countUsers() {
         return userRepository.count();
+    }
+
+    @Override
+    public Optional<User> authenticate(String email, String password) {
+        return userRepository.findByEmail(email)
+                .filter(u -> passwordEncoder.matches(password, u.getPassword()))
+                .filter(User::isActive);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    @Transactional
+    public UserDto updateUserRole(Long userId, UserRole role) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+        user.setUserRole(role);
+        return UserDto.from(userRepository.save(user));
     }
 }

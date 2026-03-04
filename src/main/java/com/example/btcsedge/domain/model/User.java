@@ -1,8 +1,11 @@
 package com.example.btcsedge.domain.model;
 
+import com.example.btcsedge.domain.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,6 +30,23 @@ public class User {
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
+    @Column(length = 80)
+    private String firstName;
+
+    @Column(length = 80)
+    private String lastName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private UserRole userRole;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean active = true;
+
+    @Column(nullable = false, updatable = false)
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     // USER <-> ROLE (Many-to-Many)
     @ManyToMany(fetch = FetchType.EAGER)
@@ -35,7 +55,8 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    @Builder.Default
+    private Set<Role> roles = new HashSet<>();
 
 
     @Column(nullable = false)
