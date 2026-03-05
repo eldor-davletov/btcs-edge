@@ -3,7 +3,7 @@ package com.example.btcsedge.domain.enums;
 public enum UserRole {
     ADMIN("Admin"),
     USER("User"),
-    MANAGER("Manager");
+    OPERATOR("Operator");
 
     private final String displayName;
 
