@@ -1,0 +1,6 @@
+-- Baseline migration for existing schema.
+-- This script intentionally left empty.
+-- The existing schema (users, roles, user_roles, etc.) was created
+-- by Hibernate before Flyway was introduced. Flyway baseline-on-migrate
+-- will mark this version as applied without executing any SQL,
+-- preserving all existing tables and data.
