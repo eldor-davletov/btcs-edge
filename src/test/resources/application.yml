@@ -15,5 +15,8 @@ spring:
     show-sql: false
     open-in-view: false
 
+  flyway:
+    enabled: false
+
 vaadin:
   launch-browser: false
