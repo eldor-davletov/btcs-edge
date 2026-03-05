@@ -2,11 +2,13 @@ package com.example.btcsedge.ui.component;
 
 import com.example.btcsedge.ui.HomeView;
 import com.example.btcsedge.ui.ReportsView;
-import com.example.btcsedge.ui.UsersView;
+import com.example.btcsedge.ui.ServiceCarsView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Nav;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 
@@ -29,18 +31,24 @@ public class SidebarNavigation extends VerticalLayout {
         navLinks.setPadding(true);
         navLinks.setSpacing(false);
         navLinks.add(
-                createLink("Dashboard", HomeView.class),
-                createLink("Users", UsersView.class),
-                createLink("Reports", ReportsView.class)
+                createLink("Home", VaadinIcon.HOME, HomeView.class),
+                createLink("Service cars", VaadinIcon.CAR, ServiceCarsView.class),
+                createLink("Reports", VaadinIcon.CHART, ReportsView.class)
         );
 
         add(toggleButton, new Nav(navLinks));
     }
 
     private <T extends com.vaadin.flow.component.Component> RouterLink createLink(
-            String label, Class<T> navigationTarget) {
-        RouterLink link = new RouterLink(label, navigationTarget);
+            String label, VaadinIcon icon, Class<T> navigationTarget) {
+        RouterLink link = new RouterLink(navigationTarget);
         link.addClassName("nav-link");
+
+        HorizontalLayout content = new HorizontalLayout(icon.create(), new Span(label));
+        content.setSpacing(true);
+        content.setAlignItems(com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER);
+        link.add(content);
+
         return link;
     }
 

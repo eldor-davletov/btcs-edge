@@ -29,17 +29,19 @@ public class MainLayout extends AppLayout {
     private void createNavbar() {
         DrawerToggle drawerToggle = new DrawerToggle();
 
-        H1 title = new H1("BTCS Edge");
+        H1 title = new H1("Traffic-control");
         title.getStyle()
                 .set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 
-        Button themeToggle = new Button(VaadinIcon.ADJUST.create(), e -> {
-            themeService.toggleTheme(UI.getCurrent());
-            e.getSource().setIcon(themeService.isDark()
-                    ? VaadinIcon.SUN_O.create()
-                    : VaadinIcon.ADJUST.create());
-        });
+        Button themeToggle = new Button(
+                themeService.isDark() ? VaadinIcon.SUN_O.create() : VaadinIcon.MOON.create(),
+                e -> {
+                    themeService.toggleTheme(UI.getCurrent());
+                    e.getSource().setIcon(themeService.isDark()
+                            ? VaadinIcon.SUN_O.create()
+                            : VaadinIcon.MOON.create());
+                });
         themeToggle.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         themeToggle.setTooltipText("Toggle dark/light theme");
 
